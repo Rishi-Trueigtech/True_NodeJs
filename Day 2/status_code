@@ -1,0 +1,30 @@
+**🤔What is a Status Code in Node.js?**
+➡️A status code in Node.js (or any web server) is a 3-digit number that tells the client (browser, Postman, etc.) about the result of a request.
+
+**🤔How Status Codes Work in Node.js**
+
+➡️When the server processes a request, it sends a response with a status code.
+➡️The status code tells the client whether the request was successful, failed, or needs action.
+
+#Common HTTP Status Codes in Node.js
+##Success Codes (2xx) → Request was successful.
+
+➡️200 OK → Everything is fine!
+➡️201 Created → A new resource was created (used for POST requests).
+
+##Redirection Codes (3xx) → Request needs to be redirected.
+
+➡️301 Moved Permanently → URL has changed.
+➡️302 Found → Temporary redirection.
+
+##Client Errors (4xx) → Problem from the client's side.
+
+➡️400 Bad Request → The request was incorrect.
+➡️401 Unauthorized → Authentication is needed.
+➡️403 Forbidden → Client does not have permission.
+➡️404 Not Found → Requested page does not exist.
+
+##Server Errors (5xx) → Problem on the server.
+
+➡️500 Internal Server Error → Something broke on the server.
+➡️503 Service Unavailable → Server is overloaded or under maintenance.
