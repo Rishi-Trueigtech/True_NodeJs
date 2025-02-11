@@ -1,0 +1,11 @@
+➡️Request and Response objects both are the callback function parameters and are used for Express and Node
+
+🤔What is a Request?
+
+➡️A request is what a client (like a browser or Postman) sends to the server.
+➡️It contains method, headers, and body (for some methods like POST).
+
+🤔what is a Response?
+
+➡️A response is what the server sends back to the client.
+➡️It includes status code, headers, and body (data being sent).
