@@ -1,0 +1,35 @@
+Lazy & Eager Loading in Sequelize
+
+In Sequelize, when fetching data from the database, you can retrieve related data (associations) in two ways:
+
+1️⃣ Lazy Loading – Fetch only the main data first and load related data later when needed.
+
+2️⃣ Eager Loading – Fetch both the main data and related data at the same time.
+
+1️⃣ Lazy Loading (On-Demand Fetching)
+🔹 Example: Fetch a User first, then fetch their Posts separately.
+
+const user = await User.findByPk(1); // Fetch user with ID 1
+const posts = await user.getPosts(); // Fetch related posts separately
+
+➡ How it works:
+
+It first gets the user.
+Then, when user.getPosts() is called, it makes another query to get posts.
+This is useful when you don’t always need related data.
+🔹 Disadvantage: More database queries, which can be slower.
+
+2️⃣ Eager Loading (Preloading Data)
+🔹 Example: Fetch a User along with their Posts in one query.
+
+const user = await User.findByPk(1, { include: Post }); // Fetch user + posts together
+
+➡ How it works:
+
+It fetches both the user and their posts in one query.
+This reduces database calls and is faster when related data is always needed.
+🔹 Disadvantage: If you don’t always need related data, you might fetch unnecessary information.
+
+Which One to Use?
+✅ Use Lazy Loading when you don't always need related data.
+✅ Use Eager Loading when you always need related data for better performance.
