@@ -27,10 +27,32 @@ exports.createUser = async (req, res) => {
 //Get All Users
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.findAll({ attributes: ["id", "name", "email"] });
+    const users = await User.findAll({ attributes: ["id", "name", "email","profession"] });
     res.json(users);
   } catch (error) {
     console.error("Error Fetching Users:", error);
     res.status(500).json({ error: "Failed to fetch users" });
   }
+};
+
+exports.updateUser  = async (req, res) => {
+    try {
+        const [updatedCount] = await User.update(
+            { profession: "Musician" },
+            {
+                where: {
+                    profession: "Singer",
+                },
+            }
+        );
+
+        if (updatedCount > 0) {
+            res.status(200).json({ message: "User  updated successfully"});
+        } else {
+            res.status(404).json({ message: "No users found with null profession" });
+        }
+    } catch (error) {
+        console.log("Error Updating user: ", error);
+        res.status(500).json({ error: "Error Updating User" });
+    }
 };

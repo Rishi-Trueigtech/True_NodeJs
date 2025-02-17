@@ -18,6 +18,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
+      profession: {
+          type: DataTypes.STRING, // Ensure this matches your migration
+          allowNull: false, // or false based on your requirements
+          default: "Unemp",
+      },
     });
   
     return User;

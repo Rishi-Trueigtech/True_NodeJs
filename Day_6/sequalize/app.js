@@ -10,8 +10,8 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 
 // Sync database
-sequelize.sync()
-  .then(() => console.log("Database Synced"))
-  .catch((err) => console.error("Sync Error:", err));
+// sequelize.sync()
+//   .then(() => console.log("Database Synced"))
+//   .catch((err) => console.error("Sync Error:", err));
 
 module.exports = app;
