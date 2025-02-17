@@ -1,0 +1,57 @@
+In Sequelize, associations define how tables (models) are related to each other in a database.
+It helps in creating relationships like:
+
+One-to-One (1:1)
+One-to-Many (1:M)
+Many-to-Many (M:M)
+
+1️⃣ One-to-One (1:1)
+🔹 Example: A User has one Profile.
+
+const User = sequelize.define('User',{name: Sequelize.STRING});
+const Profile = sequelize.define('Profile',{bio:Sequalize.STRING});
+
+User.hasOne(Profile); //A user has one profile
+Profile.belongsTo(User); //profile belongs to a user
+
+➡️ This means:
+
+A user has one profile.
+A profile belongs to one user.
+A foreign key (userId) is added to the Profile table.
+
+2️⃣ One-to-Many (1:M)
+🔹 Example: A User can have multiple Posts.
+
+const User = sequelize.define('User', { name: Sequelize.STRING });
+const Post = sequelize.define('Post', { title: Sequelize.STRING });
+
+User.hasMany(Post); // A User can have many Posts
+Post.belongsTo(User); // A Post belongs to one User
+
+➡️ This means:
+
+A user has many posts.
+A post belongs to one user.
+A foreign key (userId) is added to the Post table
+
+3️⃣ Many-to-Many (M:M)
+🔹 Example: A Student can enroll in multiple Courses, and a Course can have multiple Students.
+
+const Student = sequelize.define('Student', { name: Sequelize.STRING });
+const Course = sequelize.define('Course', { title: Sequelize.STRING });
+
+Student.belongsToMany(Course, { through: 'StudentCourses' });
+Course.belongsToMany(Student, { through: 'StudentCourses' });
+
+➡️ This means:
+
+A student can have many courses.
+A course can have many students.
+A new table (StudentCourses) is created to store the relationship.
+
+Key Points
+✔ hasOne() → One-to-One
+✔ hasMany() → One-to-Many
+✔ belongsTo() → Used with hasOne() and hasMany()
+✔ belongsToMany() → Many-to-Many
