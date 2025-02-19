@@ -1,0 +1,58 @@
+Why is Error Handling Important?
+
+->Ensures smooth user experience by handling unexpected failures.
+->Helps developers debug and fix issues effectively.
+->Prevents application crashes due to unhandled errors.
+->Provides meaningful responses to clients instead of generic server errors.
+
+Types of Errors
+Operational Errors – Expected failures like:
+Invalid user input (e.g., wrong password)
+Missing resource (e.g., 404 Not Found)
+Database connection failure
+API rate limiting
+Programming Errors (Bugs) – Unexpected issues like:
+Null reference errors
+Syntax errors
+Undefined variable access
+
+Goal: Handle operational errors gracefully & log programming errors for debugging.
+
+Centralized Error Handling in Express
+Use a custom error class (AppError) to create meaningful error messages.
+Use a global error-handling middleware (errorController.js) to catch and respond to errors consistently.
+Error Propagation
+Synchronous Code: Use throw new AppError(message, statusCode).
+Asynchronous Code (Promises, Async/Await): Use next(err) inside catch blocks.
+
+    <!-- app.get("/error", async (req, res, next) => {
+        try {
+            throw new AppError("Something went wrong!", 500);
+        } catch (err) {
+            next(err); // Pass error to global error handler
+        }
+        }); -->
+
+5. Best Practices for Error Handling & Logging
+
+✅ Error Handling Best Practices
+Use a Centralized Error Middleware
+
+Avoid handling errors separately in every route. Use a single errorController.js.
+Use Custom Error Classes
+
+Helps differentiate between operational errors and programming errors.
+Return Consistent Error Responses
+
+Provide meaningful error messages (not raw errors or stack traces in production).
+Use process.on("unhandledRejection") for Unhandled Promise Errors
+
+process.on("unhandledRejection", (err) => {
+console.error("Unhandled Promise Rejection!", err);
+process.exit(1);
+});
+
+Don't Expose Internal Errors in Production
+
+In development: Send detailed errors (stack, message).
+In production: Send generic messages (Something went wrong).

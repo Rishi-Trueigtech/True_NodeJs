@@ -1,0 +1,45 @@
+Why Use Logging?
+    Keeps track of API requests & errors.
+    Helps in debugging and monitoring application health.
+    Stores logs for later analysis (security, performance).
+Popular Logging Tools
+    Morgan → Logs HTTP requests (useful for debugging API calls).
+    Winston → Logs errors and other app events (persists logs in a file).
+Winston Logging Features
+    Supports multiple transports (Console, File, Databases).
+    Allows setting log levels (info, warn, error, etc.).
+    Can format logs into JSON for better readability.
+
+
+    // const winston = require("winston");
+
+    // const logger = winston.createLogger({
+    // level: "info",
+    // format: winston.format.json(),
+    // transports: [
+    //     new winston.transports.File({ filename: "error.log", level: "error" }),
+    //     new winston.transports.Console({ format: winston.format.simple() }),
+    // ],
+    // });
+
+    // module.exports = logger;
+
+
+✅ Logging Best Practices
+
+Use Winston for Structured Logging
+    Store logs in a file (error.log) instead of just printing them in the console.
+    
+Use Different Log Levels
+
+    info: General app events.
+    warn: Warnings that don't stop execution.
+    error: Critical errors that need attention.
+
+Use Morgan for Request Logging
+
+    Helps in debugging API requests.
+    Monitor Logs in Production
+
+Use logging services like Logstash, Elasticsearch, or CloudWatch for better insights.
+
