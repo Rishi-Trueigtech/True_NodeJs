@@ -1,19 +1,18 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const sequelize = require('./config/db');
 const userRoutes = require('./src/routes/userRoutes');
-const tourRoutes = require('./src/routes/tourRoutes');
 const bookingRoutes = require('./src/routes/bookingRoutes');
-const auth = require('./src/middlewares/auth');
+const tourRoutes = require('./src/routes/tourRoutes');
+const sequelize = require('./config/config');
 
 const app = express();
-app.use(bodyParser.json());
+app.use(express.json());
 
-app.use('/api/users', userRoutes);
-app.use('/api/tours', auth, tourRoutes); // Protecting tour routes
-app.use('/api/bookings', auth, bookingRoutes); // Protecting booking routes
+app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/bookings', bookingRoutes);
+app.use('/api/v1/tours', tourRoutes);
 
 
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
-    });
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});

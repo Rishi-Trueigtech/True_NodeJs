@@ -1,3 +1,4 @@
+// migrations/xxxxxx-create-bookings.js
 'use strict';
 
 module.exports = {
@@ -8,41 +9,26 @@ module.exports = {
                 autoIncrement: true,
                 primaryKey: true,
             },
-            userId: {
-                type: Sequelize.INTEGER,
-                references: {
-                    model: 'Users',
-                    key: 'id',
-                },
-                onUpdate: 'CASCADE',
-                onDelete: 'SET NULL',
-            },
-            tourId: {
-                type: Sequelize.INTEGER,
-                references: {
-                    model: 'Tours',
-                    key: 'id',
-                },
-                onUpdate: 'CASCADE',
-                onDelete: 'SET NULL',
-            },
-            bookingDate: {
-                type: Sequelize.DATE,
+            price: {
+                type: Sequelize.FLOAT,
                 allowNull: false,
+            },
+            paid: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: true,
             },
             createdAt: {
-                type: Sequelize.DATE,
                 allowNull: false,
+                type: Sequelize.DATE,
                 defaultValue: Sequelize.fn('NOW'),
             },
             updatedAt: {
-                type: Sequelize.DATE,
                 allowNull: false,
+                type: Sequelize.DATE,
                 defaultValue: Sequelize.fn('NOW'),
             },
         });
     },
-
     down: async (queryInterface, Sequelize) => {
         await queryInterface.dropTable('Bookings');
     },

@@ -1,28 +1,33 @@
+// models/Tour.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
+const sequelize = require('../config/config');
 
 const Tour = sequelize.define('Tour', {
-    id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-    },
-    title: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
     },
-    description: {
-        type: DataTypes.TEXT,
+    duration: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    difficulty: {
+        type: DataTypes.ENUM('easy', 'medium', 'difficult'),
         allowNull: false,
     },
     price: {
         type: DataTypes.FLOAT,
         allowNull: false,
     },
-}, {
-    timestamps: true,
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
+    summary: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    imageCover: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
 });
 
 module.exports = Tour;

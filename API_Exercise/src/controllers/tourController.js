@@ -1,12 +1,22 @@
 const Tour = require('../../models/Tour');
 
-exports.createTour = async (req, res) => {
-    const { title, description, price } = req.body;
-    const tour = await Tour.create({ title, description, price });
-    res.status(201).json(tour);
+exports.getAllTours = async (req, res, next) => {
+    const tours = await Tour.findAll();
+    res.status(200).json({
+        status: 'success',
+        results: tours.length,
+        data: {
+            tours,
+        },
+    });
 };
 
-exports.getTours = async (req, res) => {
-    const tours = await Tour.findAll();
-    res.json(tours);
+exports.createTour = async (req, res, next) => {
+    const newTour = await Tour.create(req.body);
+    res.status(201).json({
+        status: 'success',
+        data: {
+            tour: newTour,
+        },
+    });
 };

@@ -1,3 +1,4 @@
+// migrations/xxxxxx-create-users.js
 'use strict';
 
 module.exports = {
@@ -8,7 +9,11 @@ module.exports = {
                 autoIncrement: true,
                 primaryKey: true,
             },
-            username: {
+            name: {
+                type: Sequelize.STRING,
+                allowNull: false,
+            },
+            email: {
                 type: Sequelize.STRING,
                 allowNull: false,
                 unique: true,
@@ -17,19 +22,26 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
+            role: {
+                type: Sequelize.ENUM('user', 'guide', 'lead-guide', 'admin'),
+                defaultValue: 'user',
+            },
+            active: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: true,
+            },
             createdAt: {
-                type: Sequelize.DATE,
                 allowNull: false,
+                type: Sequelize.DATE,
                 defaultValue: Sequelize.fn('NOW'),
             },
             updatedAt: {
-                type: Sequelize.DATE,
                 allowNull: false,
+                type: Sequelize.DATE,
                 defaultValue: Sequelize.fn('NOW'),
             },
         });
     },
-
     down: async (queryInterface, Sequelize) => {
         await queryInterface.dropTable('Users');
     },

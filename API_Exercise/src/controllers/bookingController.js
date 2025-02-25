@@ -1,12 +1,37 @@
 const Booking = require('../../models/Booking');
 
-exports.createBooking = async (req, res) => {
-    const { userId, tourId, bookingDate } = req.body;
-    const booking = await Booking.create({ userId, tourId, bookingDate });
-    res.status(201).json(booking);
+exports.createBookingCheckout = async (req, res, next) => {
+    const { tourId, userId, price } = req.query;
+
+    if (!tourId || !userId || !price) {
+        return res.status(400).json({
+            status: 'fail',
+            message: 'Missing parameters: tour, user, or price',
+        });
+    }
+
+    try {
+        await Booking.create({ tourId, userId, price });
+
+        res.status(200).json({
+            status: 'success',
+            message: 'Booking created successfully',
+        });
+    } catch (err) {
+        res.status(500).json({
+            status: 'error',
+            message: err.message,
+        });
+    }
 };
 
-exports.getBookings = async (req, res) => {
+exports.getAllBookings = async (req, res, next) => {
     const bookings = await Booking.findAll();
-    res.json(bookings);
- };
+    res.status(200).json({
+        status: 'success',
+        results: bookings.length,
+        data: {
+            bookings,
+        },
+    });
+};

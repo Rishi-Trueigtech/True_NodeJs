@@ -1,8 +1,13 @@
 const express = require('express');
-const { createTour, getTours } = require('../controllers/tourController');
+const tourController = require('../controllers/tourController');
+const authController = require('../controllers/authController');
+
 const router = express.Router();
 
-router.post('/', createTour);
-router.get('/', getTours);
+router.use(authController.protect);
+
+router.route('/')
+    .get(tourController.getAllTours)
+    .post(authController.restrictTo('admin', 'lead-guide'), tourController.createTour);
 
 module.exports = router;

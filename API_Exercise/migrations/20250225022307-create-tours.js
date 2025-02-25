@@ -1,3 +1,4 @@
+
 'use strict';
 
 module.exports = {
@@ -8,31 +9,43 @@ module.exports = {
                 autoIncrement: true,
                 primaryKey: true,
             },
-            title: {
+            name: {
                 type: Sequelize.STRING,
                 allowNull: false,
+                unique: true,
             },
-            description: {
-                type: Sequelize.TEXT,
+            duration: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+            },
+            difficulty: {
+                type: Sequelize.ENUM('easy', 'medium', 'difficult'),
                 allowNull: false,
             },
             price: {
                 type: Sequelize.FLOAT,
                 allowNull: false,
             },
-            createdAt: {
-                type: Sequelize.DATE,
+            summary: {
+                type: Sequelize.STRING,
                 allowNull: false,
+            },
+            imageCover: {
+                type: Sequelize.STRING,
+                allowNull: false,
+            },
+            createdAt: {
+                allowNull: false,
+                type: Sequelize.DATE,
                 defaultValue: Sequelize.fn('NOW'),
             },
             updatedAt: {
-                type: Sequelize.DATE,
                 allowNull: false,
+                type: Sequelize.DATE,
                 defaultValue: Sequelize.fn('NOW'),
             },
         });
     },
-
     down: async (queryInterface, Sequelize) => {
         await queryInterface.dropTable('Tours');
     },
