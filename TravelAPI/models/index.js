@@ -1,23 +1,26 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 const config = require('../config/config.json').development;
 
-const sequelize = new Sequelize("travel_api", "postgres", "#Rishi432", {
-  host: "127.0.0.1",
-  dialect: "postgres",
+// Initialize Sequelize
+const sequelize = new Sequelize(config.database, config.username, config.password, {
+  host: config.host,
+  dialect: config.dialect,
 });
 
 const db = {};
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
 
-db.User = require('./user')(sequelize, Sequelize);
-db.Tour = require('./tour')(sequelize, Sequelize);
-db.Booking = require('./booking')(sequelize, Sequelize);
+// Define models
+db.User = require('./user')(sequelize, DataTypes);
+db.Tour = require('./tour')(sequelize, DataTypes);
+db.Booking = require('./booking')(sequelize, DataTypes);
 
 // Associations
 db.User.hasMany(db.Booking, { foreignKey: 'userId' });
 db.Tour.hasMany(db.Booking, { foreignKey: 'tourId' });
 db.Booking.belongsTo(db.User, { foreignKey: 'userId' });
 db.Booking.belongsTo(db.Tour, { foreignKey: 'tourId' });
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
 module.exports = db;

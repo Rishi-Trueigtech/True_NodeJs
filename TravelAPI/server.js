@@ -1,22 +1,25 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const morgan = require('morgan');
+const dotenv = require('dotenv');
 
-const app = express();
-app.use(express.json());
-app.use(cors());
-app.use(helmet());
-app.use(morgan('dev'));
+process.on('uncaughtException', err => {
+  console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...');
+  console.log(err.name, err.message);
+  process.exit(1);
+});
 
-const userRoutes = require('./routes/userRoutes');
-const tourRoutes = require('./routes/tourRoutes');
-const bookingRoutes = require('./routes/bookingRoutes');
+dotenv.config({ path: './config.env' });
+const app = require('./app');
 
-app.use('/api/users', userRoutes);
-app.use('/api/tours', tourRoutes);
-app.use('/api/bookings', bookingRoutes);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+const port = process.env.PORT || 3000;
+const server = app.listen(port, () => {
+  console.log(`App running on port ${port}...`);
+});
+
+process.on('unhandledRejection', err => {
+  console.log('UNHANDLED REJECTION! 💥 Shutting down...');
+  console.log(err.name, err.message);
+  server.close(() => {
+    process.exit(1);
+  });
+});
