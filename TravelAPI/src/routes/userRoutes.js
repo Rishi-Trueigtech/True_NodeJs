@@ -1,6 +1,6 @@
-const express = require('express');
-const userController = require('../controllers/userController');
-const authController = require('../controllers/authController');
+import express from 'express';
+import * as userController from '../controllers/userController.js';
+import * as authController from '../controllers/authController.js';
 
 const router = express.Router();
 
@@ -12,17 +12,13 @@ router.get('/logout', authController.logout);
 router.use(authController.protect);
 
 router.get('/me', userController.getMe, userController.getUser);
-router.patch(
-  '/updateMe',
-  userController.updateMe
-);
+router.patch('/updateMe', userController.updateMe);
 router.delete('/deleteMe', userController.deleteMe);
 
+// Restrict the following routes to admin only
 router.use(authController.restrictTo('admin'));
 
-router
-  .route('/')
-  .post(userController.createUser);
+router.route('/').post(userController.createUser);
 
 router
   .route('/:id')
@@ -30,4 +26,4 @@ router
   .patch(userController.updateUser)
   .delete(userController.deleteUser);
 
-module.exports = router;
+export default router;

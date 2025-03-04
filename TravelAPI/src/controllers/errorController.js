@@ -1,14 +1,14 @@
-const AppError = require('../utils/appError');
+import AppError from '../utils/appError.js';
 
-const handleCastErrorDB = err => new AppError(`Invalid ${err.path}: ${err.value}.`, 400);
+const handleCastErrorDB = (err) => new AppError(`Invalid ${err.path}: ${err.value}.`, 400);
 
-const handleDuplicateFieldsDB = err => {
+const handleDuplicateFieldsDB = (err) => {
   const value = err.keyValue ? Object.values(err.keyValue)[0] : 'Unknown';
   return new AppError(`Duplicate field value: ${value}. Please use another value!`, 400);
 };
 
-const handleValidationErrorDB = err => {
-  const errors = err.errors ? Object.values(err.errors).map(el => el.message) : [];
+const handleValidationErrorDB = (err) => {
+  const errors = err.errors ? Object.values(err.errors).map((el) => el.message) : [];
   return new AppError(`Invalid input data. ${errors.join('. ')}`, 400);
 };
 
@@ -40,7 +40,7 @@ const sendErrorProd = (err, req, res) => {
   });
 };
 
-module.exports = (err, req, res, next) => {
+const errorHandler = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
@@ -59,3 +59,5 @@ module.exports = (err, req, res, next) => {
     sendErrorProd(error, req, res);
   }
 };
+
+export default errorHandler;

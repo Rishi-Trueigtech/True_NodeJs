@@ -1,30 +1,29 @@
-const express = require('express');
-const tourController = require('../controllers/tourController');
-const authController = require('../controllers/authController');
+import express from 'express';
+import {createTour,updateTour,deleteTour,getTour} from '../controllers/tourController.js';
+import { protect, restrictTo } from '../controllers/authController.js';
 
 const router = express.Router();
-
 
 router
   .route('/')
   .post(
-    authController.protect,
-    authController.restrictTo('admin', 'lead-guide'),
-    tourController.createTour
+    protect,
+    restrictTo('admin', 'lead-guide'),
+    createTour
   );
 
 router
   .route('/:id')
-  .get(tourController.getTour)
+  .get(getTour)
   .patch(
-    authController.protect,
-    authController.restrictTo('admin', 'lead-guide'),
-    tourController.updateTour
+    protect,
+    restrictTo('admin', 'lead-guide'),
+    updateTour
   )
   .delete(
-    authController.protect,
-    authController.restrictTo('admin', 'lead-guide'),
-    tourController.deleteTour
+    protect,
+    restrictTo('admin', 'lead-guide'),
+    deleteTour
   );
 
-module.exports = router;
+export default router;

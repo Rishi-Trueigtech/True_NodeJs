@@ -1,7 +1,7 @@
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
+import catchAsync from '../utils/catchAsync.js';
+import AppError from '../utils/appError.js';
 
-exports.deleteOne = Model =>
+export const deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const deletedRowCount = await Model.destroy({ where: { id: req.params.id } });
 
@@ -15,28 +15,26 @@ exports.deleteOne = Model =>
     });
   });
 
-
-  exports.updateOne = Model =>
-    catchAsync(async (req, res, next) => {
-      const [updatedRowCount, updatedRows] = await Model.update(req.body, {
-        where: { id: req.params.id },
-        returning: true
-      });
-  
-      if (!updatedRowCount) {
-        return next(new AppError('No document found with that ID', 404));
-      }
-  
-      res.status(200).json({
-        status: 'success',
-        data: {
-          data: updatedRows[0]
-        }
-      });
+export const updateOne = (Model) =>
+  catchAsync(async (req, res, next) => {
+    const [updatedRowCount, updatedRows] = await Model.update(req.body, {
+      where: { id: req.params.id },
+      returning: true
     });
-  
 
-exports.createOne = Model =>
+    if (!updatedRowCount) {
+      return next(new AppError('No document found with that ID', 404));
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        data: updatedRows[0]
+      }
+    });
+  });
+
+export const createOne = (Model) =>
   catchAsync(async (req, res, next) => {
     console.log("Model received in createOne:", Model);
     const doc = await Model.create(req.body);
@@ -49,19 +47,18 @@ exports.createOne = Model =>
     });
   });
 
-  exports.getOne = (Model) =>
-    catchAsync(async (req, res, next) => {
-      const doc = await Model.findOne({ where: { id: req.params.id } });
-  
-      if (!doc) {
-        return next(new AppError('No document found with that ID', 404));
+export const getOne = (Model) =>
+  catchAsync(async (req, res, next) => {
+    const doc = await Model.findOne({ where: { id: req.params.id } });
+
+    if (!doc) {
+      return next(new AppError('No document found with that ID', 404));
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        data: doc
       }
-  
-      res.status(200).json({
-        status: 'success',
-        data: {
-          data: doc
-        }
-      });
     });
-  
+  });

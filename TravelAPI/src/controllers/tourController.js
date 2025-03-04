@@ -1,8 +1,7 @@
-const {Tour} = require('../../models');
-const factory = require('./handlerFactory');
+import db from '../../models/index.js';
+import * as factory from './handlerFactory.js';
 
-exports.getTour = factory.getOne(Tour);
-exports.createTour = factory.createOne(Tour);
-exports.updateTour = factory.updateOne(Tour);
-exports.deleteTour = factory.deleteOne(Tour);
-    
+export const getTour = factory.getOne(db.Tour);
+export const createTour = factory.createOne(db.Tour);
+export const updateTour = factory.updateOne(db.Tour);
+export const deleteTour = factory.deleteOne(db.Tour);

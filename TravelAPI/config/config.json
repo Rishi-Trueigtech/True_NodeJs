@@ -3,7 +3,7 @@
     "username": "postgres",
     "password": "#Rishi432",
     "database": "travel_api",
-    "host": "127.0.0.1",
+    "host": "postgres",
     "dialect": "postgres"
   }
 }

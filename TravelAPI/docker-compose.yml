@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:15
+    container_name: Travel
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "#Rishi432"
+      POSTGRES_DB: travel_api
+    ports:
+      - "5432:5432"
+
+  api:
+    build: .
+    container_name: travel_api1
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://postgres:#Rishi432@postgres:5432/travel_api
+    ports:
+      - "3000:3000"

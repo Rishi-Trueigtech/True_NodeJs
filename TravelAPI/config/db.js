@@ -1,9 +1,11 @@
-const { Sequelize } = require('sequelize');
-require('dotenv').config();
+import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv';
 
-const sequelize = new Sequelize("travel2", "postgres", "#Rishi432", {
-    host: "127.0.0.1",
-    dialect: 'postgres',
+dotenv.config();
+
+const sequelize = new Sequelize("travel_api", "postgres", "#Rishi432", {
+  host: "127.0.0.1",
+  dialect: 'postgres',
 });
 
-module.exports = sequelize;
+export default sequelize;
