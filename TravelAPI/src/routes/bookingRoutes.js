@@ -11,6 +11,7 @@ router.use(authController.protect);
 router.use(authController.restrictTo('admin', 'lead-guide'));
 
 router.route('/').post(bookingController.createBooking);
+router.route('/confirm').post(bookingController.confirmBooking);
 
 router
   .route('/:id')

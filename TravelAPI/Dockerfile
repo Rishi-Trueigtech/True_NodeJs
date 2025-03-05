@@ -11,7 +11,14 @@ COPY package*.json ./
 RUN npm cache clean --force
 
 # Install dependencies
-RUN npm install
+ENV NODE_OPTIONS="--openssl-legacy-provider"
+
+RUN export NODE_OPTIONS="--openssl-legacy-provider" \
+  && npm config set registry http://registry.npmjs.org/ \
+  && npm config set strict-ssl false \
+  && npm cache clean --force \
+  && npm install --legacy-peer-deps
+
 
 # Copy the rest of the application code
 COPY . .
